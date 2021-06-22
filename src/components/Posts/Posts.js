@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import Post from '../Post/Post';
-import SinglePostDetails from '../SinglePostDetails/SinglePostDetails.js';
+// import SinglePostDetails from '../SinglePostDetails/SinglePostDetails.js';
+import FunctionalSinglePostDetails from '../FunctionalSinglePostDetails/FunctionalSinglePostDetails';
 
 class Posts extends Component {
   constructor(props) {
@@ -48,13 +49,18 @@ class Posts extends Component {
       <div>
         <div className="flex">
           <div className="w-2/4">
-            <h1 className="font-bold text-xl">Posts Data</h1>
+            <div>
+              <h1 className="font-bold text-xl">Posts Data</h1>
+              <a href="#" className="bg-blue ">
+                Create Post
+              </a>
+            </div>
             <div className="flex mx-2 my-2">{posts}</div>
           </div>
           {this.state.selectedPostId && (
             <div className="w-2/4">
               <h1 className="font-bold text-2xl">Post Details</h1>
-              <SinglePostDetails id={this.state.selectedPostId} />
+              <FunctionalSinglePostDetails id={this.state.selectedPostId} />
             </div>
           )}
         </div>
