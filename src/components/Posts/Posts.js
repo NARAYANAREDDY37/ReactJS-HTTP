@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Post from '../Post/Post';
 // import SinglePostDetails from '../SinglePostDetails/SinglePostDetails.js';
 import FunctionalSinglePostDetails from '../FunctionalSinglePostDetails/FunctionalSinglePostDetails';
+import AddPost from '../AddPost/AddPost';
 
 class Posts extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Posts extends Component {
     this.state = {
       posts: [],
       selectedPostId: null,
+      isAddPost: false,
     };
   }
 
@@ -35,6 +37,13 @@ class Posts extends Component {
       selectedPostId: id,
     });
   };
+
+  onAddPostHandler = () => {
+    this.setState({
+      isAddPost: true,
+    });
+  };
+
   render() {
     const posts = this.state.posts.map((post) => {
       return (
@@ -49,9 +58,13 @@ class Posts extends Component {
       <div>
         <div className="flex">
           <div className="w-2/4">
-            <div>
+            <div className="flex items-center justify-between">
               <h1 className="font-bold text-xl">Posts Data</h1>
-              <a href="#" className="bg-blue ">
+              <a
+                href="#"
+                className="bg-blue-600 px-2 py-1 my-4 text-white "
+                onClick={this.onAddPostHandler}
+              >
                 Create Post
               </a>
             </div>
@@ -64,6 +77,11 @@ class Posts extends Component {
             </div>
           )}
         </div>
+        {this.state.isAddPost && (
+          <div className="my-3">
+            <AddPost />
+          </div>
+        )}
       </div>
     );
   }

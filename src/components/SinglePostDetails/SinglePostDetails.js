@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 class SinglePostDetails extends Component {
-
   constructor(props) {
     super(props);
 
@@ -58,7 +57,3 @@ class SinglePostDetails extends Component {
 }
 
 export default SinglePostDetails;
-
-
-
-
