@@ -18,7 +18,7 @@ function AddPost(props) {
         postData
       )
       .then((response) => {
-        console.log(response);
+        props.onPostAdded();
       });
   }
 

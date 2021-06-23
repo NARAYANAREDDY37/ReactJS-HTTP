@@ -17,6 +17,13 @@ class Posts extends Component {
   }
 
   componentDidMount() {
+    this.getPosts();
+  }
+
+  getPosts = () => {
+    this.setState({
+      isAddPost: false,
+    });
     axios
       .get(`https://react-web-dev-43cd3-default-rtdb.firebaseio.com/posts.json`)
       .then((response) => {
@@ -30,8 +37,7 @@ class Posts extends Component {
           posts: posts,
         });
       });
-  }
-
+  };
   onPostClickHandler = (id) => {
     this.setState({
       selectedPostId: id,
@@ -44,6 +50,18 @@ class Posts extends Component {
     });
   };
 
+  onPostDeleteHandler = (id, e) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete')) {
+      axios
+        .delete(
+          `https://react-web-dev-43cd3-default-rtdb.firebaseio.com/posts/${id}.json`
+        )
+        .then((response) => {
+          this.getPosts();
+        });
+    }
+  };
   render() {
     const posts = this.state.posts.map((post) => {
       return (
@@ -51,6 +69,7 @@ class Posts extends Component {
           key={post.id}
           post={post}
           postClicked={this.onPostClickHandler.bind(this, post.id)}
+          postDeleted={this.onPostDeleteHandler.bind(this, post.id)}
         />
       );
     });
@@ -68,10 +87,10 @@ class Posts extends Component {
                 Create Post
               </a>
             </div>
-            <div className="flex mx-2 my-2">{posts}</div>
+            <div className="flex flex-wrap mx-2">{posts}</div>
           </div>
           {this.state.selectedPostId && (
-            <div className="w-2/4">
+            <div className="w-2/4 ml-4">
               <h1 className="font-bold text-2xl">Post Details</h1>
               <FunctionalSinglePostDetails id={this.state.selectedPostId} />
             </div>
@@ -79,7 +98,7 @@ class Posts extends Component {
         </div>
         {this.state.isAddPost && (
           <div className="my-3">
-            <AddPost />
+            <AddPost onPostAdded={this.getPosts} />
           </div>
         )}
       </div>
